@@ -1,0 +1,53 @@
+--- Código: ASM --- CBLOCK  0x20        ByteHigh    ;Registro para guardar byte alto de la conversion        
+ByteLow     ;Registro para guardar byte bajo de la conversion        
+Contador    ;Registro utilizado en demora de 20us        
+LecturaADC  ;Registro para guardar 16 bits (La proxima variable                    
+;empezara en 0x25)    
+ENDC ;------------------------------------------------------------------------------; 
+RESET VECTOR;------------------------------------------------------------------------------ RESET     
+ORG     0x0000            ; processor reset vector          PAGESEL START          GOTO    START             ; 
+go to beginning of program ;------------------------------------------------------------------------------; MAIN PROGRAM;------------------------------------------------------------------------------ START;Configuracion de Puertos I/O..........        
+banksel     PORTA           ; Banco 0        
+clrf        PORTA           ; Limpiamos latch PORTA        
+clrf        PORTB           ; Limpiamos latch PORTB        
+banksel     ANSEL           ; Banco 1        
+movlw       b'00000001'        
+movwf       ANSEL           ; Configuramos RA0 analogico        
+movlw       b'00000001'        
+movwf       TRISA           ; RA<0> entrada analogica        
+clrf        TRISB           ; PORTB salidas ;Configuramos modulo A/D..........        
+movlw       b'10000000'     ; Justificado a la derecha, Disabled A/D Clock Divide by 2        
+movwf       ADCON1          ; Select bit VDD/VSS.-        
+banksel     ADCON0          ; Banco 0        
+movlw       b'10000001'        
+movwf       ADCON0          ; Fosc/32, Canal 0, módulo habilitado.-        
+call        Demora_20us     ; Demora de adquisicion.-        
+bsf         ADCON0,GO       ; Empezar la conversion 
+;Empieza la conversion del canal RA0.........
+
+Conversion_RA0        
+
+btfsc       ADCON0,GO       ; Espera a que termine conversion.-        
+goto        Conversion_RA0  ; Todavia no...        
+movf        ADRESH,W        ; Movemos resultado de la conversion.-        
+movwf       ByteHigh        ; Guardamos el valor de ADRESH en la variable ByteHigh        
+banksel     ADRESL          ; Banco 1        
+movf        ADRESL,W        
+movwf       ByteLow         ; Guardamos el valor de ADRESL en la variable ByteLow        
+movf        ByteHigh,W        
+movwf       LecturaADC        
+movf        ByteLow,W        
+movwf       LecturaADC+1        
+call        Demora_20us        
+bsf         ADCON0,GO       ; Empezar la conversion        
+goto        Conversion_RA0 ;Rutina usada para la conversion..........Demora_20us        
+movlw       .23        
+movwf       ContadorPLoop0  
+clrwdt                      
+decfsz      Contador,1       
+goto        PLoop0PDelL1  
+goto        PDelL2PDelL2  
+clrwdt                      
+return                       
+END 
+Gracias!
