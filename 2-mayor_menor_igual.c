@@ -1,4 +1,5 @@
 /*
+SHUT UPPP
 Autor:Martin Alpuche Pech,Ulises Ancona Graniel,Emmanuel Azcorra Balam,Shaid Bojorquez Interian 28/Enero/17
 Entradas:num1, num2 (int)
 Salidas:mayor, menor, iguales(int)
@@ -10,7 +11,6 @@ imprime si el numero es mayor, menor o si son iguales.
 El programa cumple con los requerimientos indicados y se evaluo con una serie de valores 
 y el resultado siempre fue correcto*/
 #include <stdio.h>
-
 int main(int argc, char *argv[]) {
 	/*
 	mayor,  menor, iguales
