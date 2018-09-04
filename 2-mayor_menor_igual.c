@@ -1,16 +1,16 @@
 /*
+SHUTUPaaaaa
 Autor:Martin Alpuche Pech,Ulises Ancona Graniel,Emmanuel Azcorra Balam,Shaid Bojorquez Interian 28/Enero/17
 Entradas:num1, num2 (int)
 Salidas:mayor, menor, iguales(int)
 Procedimiento general: Se utiliza dos comparaciones que 
-imprime si el numero es mayor, menor o si son iguales.
+imprime si el numero des mayor, menor o si son iguales.
 */
 /*QA comentario prueba*/
 /*El nombramiento de las variables esta segun el estandar de codificacion proporcionado.
 El programa cumple con los requerimientos indicados y se evaluo con una serie de valores 
 y el resultado siempre fue correcto*/
 #include <stdio.h>
-
 int main(int argc, char *argv[]) {
 	/*
 	mayor,  menor, iguales
@@ -39,9 +39,7 @@ int main(int argc, char *argv[]) {
 	else{
 		/*Salidas*/
 		iguales=num1;
-	
 		printf("Los dos numeros son iguales a %d", iguales);
-		
 	}
 	return 0;
 }
